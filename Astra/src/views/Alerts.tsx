@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TrendChart, type Range } from '../components/charts';
-import { Icon, Panel, ProvenanceTag, StatusChip, utcDate, utcTime } from '../components/ui';
+import { Icon, PastTag, Panel, ProvenanceTag, StatusChip, utcDate, utcTime } from '../components/ui';
 import { isCmo } from '../data/crew';
 import { alertState, domainIcon, domainLabel, hazardLabel } from '../derive';
 import { go } from '../router';
@@ -33,6 +33,7 @@ export function AlertsList() {
                   <span className="alert-meta">
                     <StatusChip status={a.status} small />
                     <span className="state">{stateLabel[st]}</span>
+                    <PastTag endedAt={a.endedAt} />
                     <span>{domainLabel[a.domain]}</span>
                     {a.hazard && <span className="hazard-tag">{hazardLabel[a.hazard]}</span>}
                     <span>
@@ -241,6 +242,7 @@ export function AlertDetail({ id }: { id: string }) {
       <header className={`detail-head dh-${a.status}`}>
         <div className="dh-row">
           <StatusChip status={a.status} />
+          <PastTag endedAt={a.endedAt} />
           <span className="muted">{domainLabel[a.domain]}</span>
           {a.hazard && <span className="hazard-tag">{hazardLabel[a.hazard]}</span>}
           <ProvenanceTag p={a.provenance} />

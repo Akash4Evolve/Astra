@@ -1563,6 +1563,14 @@ input[type='radio'] {
   opacity: 0.4;
   cursor: default;
 }
+.past-tag {
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px dashed var(--line-strong);
+  color: var(--muted);
+  white-space: nowrap;
+}
 .hazard-tag {
   font-size: 12px;
   padding: 1px 7px;

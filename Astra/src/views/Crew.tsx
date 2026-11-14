@@ -3,7 +3,7 @@ import { SIMULATED_DATASET } from '../api/client';
 import { MissionTimeline } from '../components/MissionTimeline';
 import { CountRing, Icon, Panel, ProvenanceTag, StatusChip, fmt, statusText } from '../components/ui';
 import { CREW, crewDashboards } from '../data/crewData';
-import { alertState, isActive, overallStatus, readingCount } from '../derive';
+import { alertState, isActive, isCurrent, overallStatus, readingCount } from '../derive';
 import { buildReport, downloadText } from '../report';
 import { go } from '../router';
 import { useStore } from '../store';
@@ -131,7 +131,7 @@ export function Crew() {
   // The same alert in two or more crew members on the same day.
   const seen = new Map<string, number>();
   crew.forEach((d) =>
-    d.alerts.filter((a) => isActive(alertState(a, alertStates))).forEach((a) => seen.set(a.title, (seen.get(a.title) ?? 0) + 1)),
+    d.alerts.filter((a) => isCurrent(a) && isActive(alertState(a, alertStates))).forEach((a) => seen.set(a.title, (seen.get(a.title) ?? 0) + 1)),
   );
   const shared = [...seen].filter(([, n]) => n > 1);
   const copy = async () => {
