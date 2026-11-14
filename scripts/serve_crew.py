@@ -13,8 +13,12 @@ and raises alerts at the point they would have happened.
     python scripts/serve_crew.py --through-day 180  # the whole mission
     python scripts/serve_crew.py --seed-only --url http://127.0.0.1:8000   # seed a running server
 
-The store is in memory: restart this script and the data (and any check-ins or actions
-sent from the frontend) start over.
+By default the store is in memory: restart this script and everything (including check-ins
+and actions sent from the frontend) starts over, which keeps rehearsals from leaking into the
+demo. With --db the data is kept in a SQLite file and survives restarts; seeding again only
+adds what is missing (readings have fixed IDs).
+
+    python scripts/serve_crew.py --db data/astra.db
 """
 from __future__ import annotations
 
@@ -79,7 +83,7 @@ def seed(api: HttpApi, through_day: int) -> None:
             raise RuntimeError(f"day {day}: POST /measurements returned {status}: {body}")
         total += body["accepted"]
     _, alerts = api.get("/alerts")
-    print(f"Seeded {total} simulated readings (days 1-{max(days)}), {len(alerts)} alert(s) raised:")
+    print(f"Seeded {total} new simulated readings (days 1-{max(days)}); {len(alerts)} alert(s) in the store:")
     for a in sorted(alerts, key=lambda a: (a["astronaut_id"], a["parameter"])):
         print(f"  {a['alert_id']}  {a['astronaut_id']:<7} {a['parameter']:<12} {a['level']:<7} {a['title']}")
 
@@ -105,6 +109,7 @@ def main() -> None:
     ap.add_argument("--through-day", type=int, default=143, help="last mission day to load (1-180)")
     ap.add_argument("--seed-only", action="store_true", help="seed an already running server and exit")
     ap.add_argument("--url", default=None, help="server to seed with --seed-only")
+    ap.add_argument("--db", default=None, help="SQLite file to keep data in (default: in memory)")
     args = ap.parse_args()
 
     url = args.url or f"http://{args.host}:{args.port}"
@@ -118,6 +123,11 @@ def main() -> None:
     env["PYTHONPATH"] = os.pathsep.join([str(ROOT / "ml" / "src"), str(ROOT / "backend")])
     env.setdefault("ASTRA_CORS_ORIGINS", FRONTEND_ORIGINS)
     env.setdefault("ASTRA_REQUIRE_ROLES", "1")  # the frontend sends X-ASTRA-Role: astronaut
+    if args.db:
+        env["ASTRA_DB"] = str(Path(args.db).resolve())
+        print(f"Keeping data in {env['ASTRA_DB']}")
+    else:
+        env.pop("ASTRA_DB", None)
     server = subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app.main:app", "--host", args.host, "--port", str(args.port),
          "--log-level", "warning"],

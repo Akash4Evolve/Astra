@@ -19,10 +19,10 @@ Say these out loud when presenting. Each one is something ASTRA does **not** do 
 
 ## System
 
-10. **In-memory store.** Restarting the API loses all data, alerts, actions and the audit trail. Persistence (SQLite/Postgres behind the store interface) is not built.
+10. **Storage is single-node.** By default the store is in memory and a restart loses everything. With `ASTRA_DB` data is kept in one SQLite file on the machine running the API: no replication, no backup schedule, no encryption at rest, and no migrations beyond refusing a newer schema. There is no Postgres option yet.
 11. **Roles are declared, not authenticated.** `X-ASTRA-Role` is taken on trust. There is no login, no encryption at rest, and no access control beyond preventing mistakes. Do not expose the API beyond a trusted local network.
 12. **Single process.** No horizontal scaling, no background jobs; alerts are evaluated when data arrives.
-13. **Latency was measured on one laptop** with the in-memory store and 21 simulated days; it will differ elsewhere.
+13. **Latency was measured on one laptop** with the in-memory store and 21 simulated days; SQLite is slower and it will differ elsewhere.
 14. **Time.** All times are UTC; the crew dataset is dated in 2027, so server "now" and data time differ in the crew demo.
 
 ## Scope

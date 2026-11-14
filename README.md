@@ -6,7 +6,7 @@ ASTRA collects health readings (wearable, self-report check-ins), compares each 
 
 | Part | Folder | What it is |
 |---|---|---|
-| Backend API | `backend/app` | FastAPI: ingest, alerts, check-ins, actions, dashboard, trends, Digital Twin, offline sync, audit trail, roles, experimental PPG quality gate |
+| Backend API | `backend/app` | FastAPI: ingest, alerts, check-ins, actions, dashboard, trends, Digital Twin, offline sync, audit trail, roles, experimental PPG quality gate; in-memory or SQLite storage |
 | Analytics | `ml/src/astra_ml` | Robust personal baseline + persistence rule; PPG signal-quality model |
 | Frontend | `Astra/` | React app for the crew (see `Astra/README.md`); runs alone in demo mode or against the backend |
 | Scripts | `scripts/` | Simulator, one-command demo, crew-data server, backup recorder, dataset download |
@@ -41,6 +41,8 @@ npm run dev
 
 Open http://localhost:5173. Swagger UI: http://127.0.0.1:8000/docs.
 
+To keep data (check-ins, acknowledgements, actions, audit trail) across restarts, add `--db data/astra.db`. Without it the store is in memory and every restart starts clean, which is what you want before a live demo.
+
 **Frontend alone** (no Python at all): in `Astra/`, leave `VITE_API_URL` unset and run `npm run dev`.
 
 ## How it works
@@ -51,6 +53,7 @@ Open http://localhost:5173. Swagger UI: http://127.0.0.1:8000/docs.
 4. **Response**: the crew acknowledges (means "seen", not medical clearance) and records actions (note, follow-up measurement, protocol followed, escalation requested). Actions are append-only.
 5. **Digital Twin** (`/astronauts/{id}/twin`): a bounded per-domain summary against the astronaut's own baseline. Domains with no data source stay `NOT_CONNECTED` and are never filled in.
 6. **Audit trail** (`/audit`): every change, with the declared role.
+7. **Storage**: in memory by default, or SQLite with `ASTRA_DB=<file>` (same behaviour, checked by running the whole test suite on both). In SQLite the audit trail and actions are append-only at the database level too.
 
 ## Endpoints
 
@@ -79,6 +82,7 @@ Errors always look like `{"error": {"code": ..., "message": ...}}`.
 
 | Variable | Default | Meaning |
 |---|---|---|
+| `ASTRA_DB` | unset (in memory) | SQLite file to keep data in, e.g. `data/astra.db` |
 | `ASTRA_CORS_ORIGINS` | `http://localhost:5173,http://localhost:3000` | Comma-separated browser origins allowed to call the API |
 | `ASTRA_REQUIRE_ROLES` | off | `1` to enforce roles |
 | `ASTRA_LOG_LEVEL` | `INFO` | Python log level |
@@ -102,7 +106,7 @@ Field-by-field definitions: [docs/data_dictionary.md](docs/data_dictionary.md).
 
 ## Limitations
 
-Read [docs/limitations.md](docs/limitations.md) before presenting any result. In short: simulated astronaut data, no clinical validation, in-memory store, declared (not authenticated) roles, and thresholds that are demo assumptions.
+Read [docs/limitations.md](docs/limitations.md) before presenting any result. In short: simulated astronaut data, no clinical validation, single-node storage, declared (not authenticated) roles, and thresholds that are demo assumptions.
 
 ## If the demo fails
 
@@ -112,6 +116,12 @@ Read [docs/limitations.md](docs/limitations.md) before presenting any result. In
 
 ```bash
 python -m pytest -q
+```
+
+The same suite on the SQLite store (bash; in PowerShell set `$env:ASTRA_DB=":memory:"` first):
+
+```bash
+ASTRA_DB=":memory:" python -m pytest -q
 ```
 
 Tested versions are pinned in `requirements-lock.txt`.

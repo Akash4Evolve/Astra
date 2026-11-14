@@ -20,6 +20,7 @@ from .observability import REQUEST_ID, RequestLogMiddleware, configure_logging, 
 from .roles import HEADER as ROLE_HEADER, RoleMiddleware, current_role, roles_required_from_env
 from .schemas import Action, ActionCreate, CheckInResult, DashboardOut, DeviceStatusOut, TrendsOut
 from .services import evaluate_series
+from .sqlite_store import SqliteStore
 from .store import InMemoryStore
 from .sync import SourceSyncState, SyncBatch, SyncLogEntry, SyncStatusOut
 from .twin import TwinOut, build_twin
@@ -34,6 +35,12 @@ def _origins_from_env() -> list[str]:
     if raw is None:
         return list(DEFAULT_CORS_ORIGINS)
     return [o.strip() for o in raw.split(",") if o.strip()]
+
+
+def store_from_env() -> InMemoryStore | SqliteStore:
+    """ASTRA_DB=<file path> keeps data on disk (SQLite); unset means in-memory, lost on restart."""
+    path = os.getenv("ASTRA_DB", "").strip()
+    return SqliteStore(path) if path else InMemoryStore()
 
 
 def _require_aware(value: datetime | None, name: str) -> datetime | None:
@@ -53,7 +60,7 @@ def create_app(
     ppg_model_path: Path | None = None,
     require_roles: bool | None = None,
 ) -> FastAPI:
-    store = store or InMemoryStore()
+    store = store if store is not None else store_from_env()
     now = clock or (lambda: datetime.now(timezone.utc))
     origins = cors_origins if cors_origins is not None else _origins_from_env()
     if "*" in origins:
@@ -74,7 +81,8 @@ def create_app(
             allow_headers=["Content-Type", ROLE_HEADER, REQUEST_ID],
             expose_headers=[REQUEST_ID],
         )
-    logger.info("ASTRA API starting: roles %s, CORS origins %s",
+    logger.info("ASTRA API starting: store %s, roles %s, CORS origins %s",
+                f"SQLite ({store.path})" if isinstance(store, SqliteStore) else "in-memory (lost on restart)",
                 "ENFORCED" if enforce_roles else "recorded only", origins or "none")
 
     def audit(event_type: AuditEventType, actor: str, entity_type: str, entity_id: str | None = None,

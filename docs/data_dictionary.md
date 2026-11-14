@@ -2,6 +2,8 @@
 
 Definitions of what the ASTRA API stores and returns. The simulated crew CSV used by the frontend has its own dictionary at `Astra/src/data/data_dictionary.csv`.
 
+Storage: in memory, or SQLite when `ASTRA_DB` is set (`backend/app/sqlite_store.py`: one table per record type, each record kept whole as JSON beside its lookup columns; schema version 1).
+
 All timestamps are ISO 8601 **with a timezone** (requests without one are rejected) and are stored in UTC.
 
 ## Measurement (`POST /api/v1/measurements`, inside `POST /api/v1/sync`)

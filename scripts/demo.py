@@ -45,6 +45,8 @@ def start_server(port: int) -> subprocess.Popen:
     env = dict(os.environ)
     env["PYTHONPATH"] = os.pathsep.join([str(ROOT / "ml" / "src"), str(ROOT / "backend")])
     env.setdefault("ASTRA_REQUIRE_ROLES", "1")  # each step below uses the role that would do it
+    env.pop("ASTRA_DB", None)  # the story starts from an empty store every time
+    env.setdefault("ASTRA_LOG_LEVEL", "WARNING")  # keep request logs out of the story on screen
     return subprocess.Popen(
         [sys.executable, "-m", "uvicorn", "app.main:app", "--host", "127.0.0.1", "--port", str(port),
          "--log-level", "warning"],
