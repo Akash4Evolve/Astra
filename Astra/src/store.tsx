@@ -16,6 +16,8 @@ const KEY = 'crew-health:v1';
 export const DRAFT_KEY = 'crew-health:checkin-draft';
 const RETRY_BASE_MS = 2_000;
 const RETRY_MAX_MS = 60_000;
+/** How long "Acquiring signal" plays before the link comes up. */
+export const ACQUIRE_MS = 1400;
 const empty: Persisted = { actions: [], checkins: [], alertStates: {}, linkUp: false };
 
 function load(): Persisted {
@@ -64,6 +66,12 @@ interface Store extends Persisted {
   record: (a: Omit<ActionRecord, 'id' | 'at' | 'synced'>, nextState?: AlertState) => void;
   submitCheckin: (c: Omit<CheckIn, 'id' | 'at' | 'synced'>) => void;
   setLinkUp: (up: boolean) => void;
+  /** True while the link is being established (between connectLink and the link coming up). */
+  acquiring: boolean;
+  /** Start establishing the ground link. Keeps going if the user leaves the page. */
+  connectLink: () => void;
+  /** Drop the link, or cancel a connection still being established. */
+  dropLink: () => void;
   sync: () => Promise<void>;
   resetDemo: () => void;
 }
@@ -107,6 +115,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
+  const [acquiring, setAcquiring] = useState(false);
+  // Lives in the provider, not in a page, so leaving the Data page doesn't cancel a connection.
+  const acquireTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const clearAcquire = () => {
+    if (acquireTimer.current) clearTimeout(acquireTimer.current);
+    acquireTimer.current = null;
+    setAcquiring(false);
+  };
+  useEffect(() => () => {
+    if (acquireTimer.current) clearTimeout(acquireTimer.current);
+  }, []);
   const [lastSync, setLastSync] = useState<string | null>(null);
   const [syncError, setSyncError] = useState<string | null>(null);
   const [retryTick, setRetryTick] = useState(0);
@@ -254,9 +273,27 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       setView,
       record,
       submitCheckin,
-      setLinkUp: (up) => setP((s) => ({ ...s, linkUp: up })),
+      setLinkUp: (up) => {
+        clearAcquire();
+        setP((s) => ({ ...s, linkUp: up }));
+      },
+      acquiring,
+      connectLink: () => {
+        if (latest.current.linkUp || acquireTimer.current) return;
+        setAcquiring(true);
+        acquireTimer.current = setTimeout(() => {
+          acquireTimer.current = null;
+          setAcquiring(false);
+          setP((s) => ({ ...s, linkUp: true }));
+        }, ACQUIRE_MS);
+      },
+      dropLink: () => {
+        clearAcquire();
+        setP((s) => ({ ...s, linkUp: false }));
+      },
       sync,
       resetDemo: () => {
+        clearAcquire();
         try {
           localStorage.removeItem(DRAFT_KEY);
         } catch {
@@ -266,7 +303,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [p, dashboard, view, error, syncError, syncing, pending, lastSync, sync],
+    [p, dashboard, view, error, syncError, syncing, acquiring, pending, lastSync, sync],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

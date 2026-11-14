@@ -195,7 +195,7 @@ function DemoBar() {
 }
 
 function TopBar({ watchCount, reviewCount }: { watchCount: number; reviewCount: number }) {
-  const { dashboard, linkUp, pending, syncing } = useStore();
+  const { dashboard, linkUp, acquiring, pending, syncing } = useStore();
   const now = useClock(dashboard?.generatedAt);
   const h = now.getUTCHours();
   const greet = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
@@ -222,7 +222,13 @@ function TopBar({ watchCount, reviewCount }: { watchCount: number; reviewCount: 
       <div className="top-right">
         <span className={`link-pill ${linkUp ? 'up' : 'down'}`} role="status">
           <Icon name="sat" size={16} />
-          {linkUp ? (syncing ? 'Sending…' : 'Ground link up') : `Link down${pending ? `, ${pending} queued` : ''}`}
+          {linkUp
+            ? syncing
+              ? 'Sending…'
+              : 'Ground link up'
+            : acquiring
+              ? 'Connecting…'
+              : `Link down${pending ? `, ${pending} queued` : ''}`}
         </span>
         <span className="clock">
           <span className="num">

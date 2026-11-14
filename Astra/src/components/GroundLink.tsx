@@ -1,37 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
 import { DEMO_MODE } from '../api/client';
 import { useStore } from '../store';
 import { Icon, utcTime } from './ui';
 
 type Phase = 'down' | 'acquiring' | 'up';
 
-/** How long "Acquiring signal" plays before the link comes up. */
-const ACQUIRE_MS = 1400;
-
 /** Ground link status and control: a station-to-Earth beam that lights up and carries queued records. */
 export function GroundLink() {
-  const { linkUp, setLinkUp, pending, syncing, lastSync, syncError } = useStore();
-  const [acquiring, setAcquiring] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
-  }, []);
+  // The connecting step lives in the store, so it finishes even if this page is left.
+  const { linkUp, acquiring, connectLink: connect, dropLink: drop, pending, syncing, lastSync, syncError } = useStore();
 
   const phase: Phase = linkUp ? 'up' : acquiring ? 'acquiring' : 'down';
   const sending = linkUp && (syncing || pending > 0);
-
-  const connect = () => {
-    setAcquiring(true);
-    timer.current = setTimeout(() => {
-      setAcquiring(false);
-      setLinkUp(true);
-    }, ACQUIRE_MS);
-  };
-  const drop = () => {
-    if (timer.current) clearTimeout(timer.current);
-    setAcquiring(false);
-    setLinkUp(false);
-  };
 
   const headline = { down: 'No signal', acquiring: 'Acquiring signal…', up: sending ? 'Transmitting' : 'Link established' }[phase];
   const detail =
