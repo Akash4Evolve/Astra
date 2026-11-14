@@ -1,4 +1,4 @@
-# ASTRA: crew health monitoring for long-duration missions
+# ASTRA: crew health monitoring for long-duration missions.
 
 NASA Space Apps 2026 entry for *Create Health Monitoring Software for Astronauts on Space Missions*.
 
