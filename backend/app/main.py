@@ -68,7 +68,7 @@ def create_app(
 
     configure_logging()
     enforce_roles = roles_required_from_env() if require_roles is None else require_roles
-    app = FastAPI(title="ASTRA API", version="1.1.0")
+    app = FastAPI(title="ASTRA API", version="1.1.2")
     # Starlette runs the last-added middleware first: CORS, then logging, then roles,
     # so a role refusal is still logged and still carries CORS headers.
     app.add_middleware(RoleMiddleware, require=enforce_roles)
