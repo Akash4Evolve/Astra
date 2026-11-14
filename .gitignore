@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Large or licensed data: download with scripts/download_datasets.py
+data/raw/
+data/processed/
+# Trained models: retrain with ml/eval/train_ppg_quality.py --with-wesad
+models/*.joblib
+
+# OS / archive leftovers
+__MACOSX/
+.DS_Store
+Thumbs.db
+
+# Local settings
+.env
+.env.*.local

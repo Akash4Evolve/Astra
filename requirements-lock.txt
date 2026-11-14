@@ -1,0 +1,14 @@
+# Exact versions the code freeze was tested with (Python 3.11.9, Windows 11): 158 tests passing, 1 skipped.
+anyio==4.15.1
+fastapi==0.115.6
+httpx==0.28.1
+joblib==1.6.0
+numpy==2.4.6
+pandas==3.0.6
+pydantic==2.14.0
+pydantic_core==2.50.0
+pytest==9.1.1
+scikit-learn==1.9.1
+scipy==1.17.1
+starlette==0.41.3
+uvicorn==0.34.0

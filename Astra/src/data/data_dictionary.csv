@@ -1,0 +1,22 @@
+column,category,unit,description,hrp_hazard
+astronaut_id,ID,—,Crew member identifier,—
+name / role,—,—,Fictional crew,—
+mission_day / date,—,day,Day 1 = launch,—
+heart_rate_rest_bpm,Cardiovascular,bpm,Resting heart rate,Gravity fields
+hrv_rmssd_ms,Cardiovascular,ms,"Heart-rate variability (RMSSD); drops with stress, poor sleep, illness",Isolation & confinement
+systolic_bp_mmhg / diastolic_bp_mmhg,Cardiovascular,mmHg,Blood pressure,Gravity fields
+spo2_pct,Vitals,%,Blood oxygen saturation,Hostile/closed environment
+body_temp_c,Vitals,°C,Core body temperature (runs slightly high in microgravity),Hostile/closed environment
+resp_rate_bpm,Vitals,breaths/min,Respiratory rate,Hostile/closed environment
+sleep_hours / sleep_quality_1_10,Behavioural,h / score,Sleep duration and self-rated quality,Isolation & confinement
+mood_1_5 / stress_0_10,Behavioural,score,Daily self-report,Isolation & confinement
+reaction_time_ms,Cognitive,ms,Psychomotor vigilance reaction time,Isolation & confinement
+headache,Symptom,bool,Self-reported headache,Hostile/closed environment
+body_mass_kg,Musculoskeletal,kg,Body mass,Gravity fields
+hip_bmd_loss_pct,Musculoskeletal,%,Estimated hip bone density loss vs preflight (modelled ~1%/month),Gravity fields
+grip_strength_pct_preflight,Musculoskeletal,%,Grip strength vs preflight,Gravity fields
+exercise_min,Countermeasure,min,Daily exercise (0 on EVA days),Gravity fields
+radiation_dose_msv / cumulative_dose_msv,Radiation,mSv,Daily and cumulative absorbed dose (ISS-like ~0.7/day),Space radiation
+cabin_co2_mmhg,Environment,mmHg,Cabin CO2 partial pressure,Hostile/closed environment
+cabin_temp_c / cabin_noise_db,Environment,°C / dB,Cabin temperature and noise,Hostile/closed environment
+event,Label,text,Ground-truth label for planted events (hide from the app's logic; use to check alerts),—

@@ -1,0 +1,138 @@
+[
+ {
+  "dataset": "NASA DONKI SEP",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: HTTP Error 400: Bad Request",
+   "2021-01-01..2021-12-31: HTTP Error 400: Bad Request",
+   "2022-01-01..2022-12-31: HTTP Error 400: Bad Request",
+   "2023-01-01..2023-12-31: HTTP Error 400: Bad Request",
+   "2024-01-01..2024-12-31: HTTP Error 400: Bad Request",
+   "2025-01-01..2025-12-31: HTTP Error 400: Bad Request",
+   "2026-01-01..2026-11-14: HTTP Error 400: Bad Request"
+  ],
+  "downloaded_at": "2026-11-14T14:36:17+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI RBE",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: HTTP Error 400: Bad Request",
+   "2021-01-01..2021-12-31: HTTP Error 400: Bad Request",
+   "2022-01-01..2022-12-31: HTTP Error 400: Bad Request",
+   "2023-01-01..2023-12-31: HTTP Error 429: Too Many Requests",
+   "2024-01-01..2024-12-31: HTTP Error 429: Too Many Requests",
+   "2025-01-01..2025-12-31: HTTP Error 429: Too Many Requests",
+   "2026-01-01..2026-11-14: HTTP Error 429: Too Many Requests"
+  ],
+  "downloaded_at": "2026-11-14T14:41:28+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI CME",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: HTTP Error 429: Too Many Requests",
+   "2021-01-01..2021-12-31: HTTP Error 429: Too Many Requests",
+   "2022-01-01..2022-12-31: HTTP Error 429: Too Many Requests",
+   "2023-01-01..2023-12-31: HTTP Error 429: Too Many Requests",
+   "2024-01-01..2024-12-31: HTTP Error 429: Too Many Requests",
+   "2025-01-01..2025-12-31: HTTP Error 429: Too Many Requests",
+   "2026-01-01..2026-11-14: HTTP Error 429: Too Many Requests"
+  ],
+  "downloaded_at": "2026-11-14T14:46:37+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI SEP",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov",
+   "2021-01-01..2021-12-31: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov",
+   "2022-01-01..2022-12-31: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov",
+   "2023-01-01..2023-12-31: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov",
+   "2024-01-01..2024-12-31: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov",
+   "2025-01-01..2025-12-31: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov",
+   "2026-01-01..2026-11-14: kauai.ccmc.gsfc.nasa.gov: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time, or establishe | api.nasa.gov: HTTP Error 429: Too Many Requests -> the shared DEMO_KEY limit is used up; get a free key at https://api.nasa.gov"
+  ],
+  "downloaded_at": "2026-11-14T15:38:13+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI SEP",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2021-01-01..2021-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2022-01-01..2022-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2023-01-01..2023-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2024-01-01..2024-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2025-01-01..2025-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2026-01-01..2026-11-14: api.nasa.gov: HTTP Error 400: Bad Request"
+  ],
+  "downloaded_at": "2026-11-14T15:41:28+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI RBE",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2021-01-01..2021-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2022-01-01..2022-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2023-01-01..2023-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2024-01-01..2024-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2025-01-01..2025-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2026-01-01..2026-11-14: api.nasa.gov: HTTP Error 400: Bad Request"
+  ],
+  "downloaded_at": "2026-11-14T15:41:47+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI CME",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2021-01-01..2021-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2022-01-01..2022-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2023-01-01..2023-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2024-01-01..2024-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2025-01-01..2025-12-31: api.nasa.gov: HTTP Error 400: Bad Request",
+   "2026-01-01..2026-11-14: api.nasa.gov: HTTP Error 400: Bad Request"
+  ],
+  "downloaded_at": "2026-11-14T15:42:09+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ },
+ {
+  "dataset": "NASA DONKI FLR",
+  "start": "2020-01-01",
+  "end": "2026-11-14",
+  "records": 0,
+  "failed_ranges": [
+   "2020-01-01..2020-12-31: api.nasa.gov: HTTP Error 404: Not Found",
+   "2021-01-01..2021-12-31: api.nasa.gov: HTTP Error 404: Not Found",
+   "2022-01-01..2022-12-31: api.nasa.gov: HTTP Error 404: Not Found",
+   "2023-01-01..2023-12-31: api.nasa.gov: HTTP Error 404: Not Found",
+   "2024-01-01..2024-12-31: api.nasa.gov: HTTP Error 404: Not Found",
+   "2025-01-01..2025-12-31: api.nasa.gov: HTTP Error 404: Not Found",
+   "2026-01-01..2026-11-14: api.nasa.gov: HTTP Error 404: Not Found"
+  ],
+  "downloaded_at": "2026-11-14T15:42:38+00:00",
+  "source": "CCMC DONKI (kauai.ccmc.gsfc.nasa.gov) / api.nasa.gov"
+ }
+]
