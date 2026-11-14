@@ -4,6 +4,8 @@ NASA Space Apps 2026 entry for *Create Health Monitoring Software for Astronauts
 
 ASTRA collects health readings (wearable, self-report check-ins), compares each astronaut against **their own** baseline, raises **explainable** alerts, and lets the crew acknowledge and act on them, while working through a delayed or dropped link to the ground. It never diagnoses. **All astronaut data in this repository is simulated.**
 
+**Try it online:** https://astra-crew-health.vercel.app. This is the frontend alone, in demo mode: it runs on the bundled simulated crew dataset and its own alert rules, with no backend. The live backend flow (alerts and acknowledgements on the server, audit trail, offline sync) runs locally; see below.
+
 | Part | Folder | What it is |
 |---|---|---|
 | Backend API | `backend/app` | FastAPI: ingest, alerts, check-ins, actions, dashboard, trends, Digital Twin, offline sync, audit trail, roles, experimental PPG quality gate; in-memory or SQLite storage |
@@ -44,6 +46,14 @@ Open http://localhost:5173. Swagger UI: http://127.0.0.1:8000/docs.
 To keep data (check-ins, acknowledgements, actions, audit trail) across restarts, add `--db data/astra.db`. Without it the store is in memory and every restart starts clean, which is what you want before a live demo.
 
 **Frontend alone** (no Python at all): in `Astra/`, leave `VITE_API_URL` unset and run `npm run dev`.
+
+**Hosted copy**: the online demo is this demo-mode build on Vercel's free plan (project `astra-crew-health`). It is not connected to GitHub, so pushing does not update it. To publish changes, run this in `Astra/` (needs `npx vercel login` once):
+
+```bash
+npx vercel deploy --prod
+```
+
+`Astra/.vercelignore` keeps `.env.local` out of the upload, so the hosted build never points at a backend on your own computer.
 
 ## How it works
 

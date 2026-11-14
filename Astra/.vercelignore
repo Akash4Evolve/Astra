@@ -1,0 +1,7 @@
+# Never upload local settings: .env.local points the app at a backend on this computer.
+# Without VITE_API_URL the hosted app runs in demo mode on the bundled simulated dataset.
+*.local
+.env*
+!.env.example
+node_modules
+dist
