@@ -1,6 +1,6 @@
 # Backup demo material (all data SIMULATED)
 
-Made by `python scripts/make_demo_backup.py` on 2026-11-14T18:03:16+00:00. Re-run it after code changes.
+Made by `python scripts/make_demo_backup.py` on 2026-11-14T20:08:49+00:00. Re-run it after code changes.
 
 | File | Use it when |
 |---|---|

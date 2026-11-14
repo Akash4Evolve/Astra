@@ -1,4 +1,4 @@
-Starting ASTRA API on http://127.0.0.1:61509 (in-memory store, local only) ...
+Starting ASTRA API on http://127.0.0.1:50396 (in-memory store, local only) ...
 ASTRA DEMO - all data below is SIMULATED (CrewBand simulator). Not clinical data.
 
 === STEP 1: CrewBand streams daily readings and check-ins ===============
@@ -18,7 +18,7 @@ ASTRA DEMO - all data below is SIMULATED (CrewBand simulator). Not clinical data
   day 13  HR  63.7 bpm  sent
   day 14  HR  63.9 bpm  sent
   day 15  HR  63.1 bpm  sent
-  Digital Twin (baseline formed)  version=735aaf713419  attention_needed=False
+  Digital Twin (baseline formed)  version=653573b21f22  attention_needed=False
     - Cardiovascular           WITHIN_PERSONAL_BASELINE    7d complete=1.0
     - Skin temperature         WITHIN_PERSONAL_BASELINE    7d complete=1.0
     - Sleep and self-report    WITHIN_PERSONAL_BASELINE    7d complete=1.0
@@ -34,21 +34,21 @@ ASTRA DEMO - all data below is SIMULATED (CrewBand simulator). Not clinical data
   day 19  HR  69.1 bpm  [OFFLINE - buffered on device]
   day 20  HR  70.1 bpm  [OFFLINE - buffered on device]
   link restored - sending buffered data as one sync batch ...
-  sync SYNC-891106E6: 15 records applied, alerts ['ALT-4B5B27CB']
+  sync SYNC-1EF6C7DE: 15 records applied, alerts ['ALT-DD6EE5A2']
   oldest buffered reading arrived 108.0 h late (simulated time); duplicates ignored: 0
 
 === STEP 3: ASTRA raises an explainable alert ===========================
-  ALERT ALT-4B5B27CB  level=REVIEW  domain=cardiovascular
+  ALERT ALT-DD6EE5A2  level=REVIEW  domain=cardiovascular
     Resting heart-rate trend differs from personal baseline
     observed:   3 consecutive readings above the personal baseline band (|robust z| > 3.0)
     window:     baseline 2026-10-25 to 2026-11-07 (14 valid samples)
     quality:    VALID   model: robust_baseline_v2+persistence_v1
-    evidence:   3 record IDs, e.g. bc40d05d-2168-42d5-99fa-6dafd3053271
+    evidence:   3 record IDs, e.g. 401f72af-8975-497f-9ea9-9ea82a08b97c
     next step:  Repeat the measurement under the approved measurement conditions and follow the applicable onboard medical protocol.
     diagnosis:  None  (ASTRA never diagnoses)
 
 === STEP 4: Digital Twin shows the change ===============================
-  Digital Twin (after sync)  version=570b4e81c1c8  attention_needed=True
+  Digital Twin (after sync)  version=035ace898d2f  attention_needed=True
     - Cardiovascular           CHANGE_FROM_BASELINE        7d complete=1.0
     - Skin temperature         WITHIN_PERSONAL_BASELINE    7d complete=1.0
     - Sleep and self-report    WITHIN_PERSONAL_BASELINE    7d complete=1.0
@@ -58,10 +58,10 @@ ASTRA DEMO - all data below is SIMULATED (CrewBand simulator). Not clinical data
     - Cabin environment        NOT_CONNECTED             
 
 === STEP 5: Astronaut acknowledges and records a follow-up ==============
-  acknowledged (means 'seen', not medical clearance); action ACT-F559317D recorded
+  acknowledged (means 'seen', not medical clearance); action ACT-300F18DE recorded
 
 === STEP 6: Twin and audit trail after the action =======================
-  Digital Twin (after action)  version=ba91a22c2f5d  attention_needed=False
+  Digital Twin (after action)  version=25720b094050  attention_needed=False
     - Cardiovascular           CHANGE_ACKNOWLEDGED         7d complete=1.0
     - Skin temperature         WITHIN_PERSONAL_BASELINE    7d complete=1.0
     - Sleep and self-report    WITHIN_PERSONAL_BASELINE    7d complete=1.0
@@ -69,8 +69,8 @@ ASTRA DEMO - all data below is SIMULATED (CrewBand simulator). Not clinical data
     - Immune function          NOT_CONNECTED             
     - Radiation exposure       NOT_CONNECTED             
     - Cabin environment        NOT_CONNECTED             
-    follow-up ACT-F559317D due 2026-11-15T18:03:14Z overdue=False
-  twin_version changed: 570b4e81c1c8 -> ba91a22c2f5d
+    follow-up ACT-300F18DE due 2026-11-15T20:08:47Z overdue=False
+  twin_version changed: 035ace898d2f -> 25720b094050
     ACTION_RECORDED          1
     ALERT_ACKNOWLEDGED       1
     ALERT_CREATED            1
@@ -79,9 +79,9 @@ ASTRA DEMO - all data below is SIMULATED (CrewBand simulator). Not clinical data
     SYNC_APPLIED             1
 
 === STEP 7: Latency (this laptop, in-memory store) ======================
-  POST /measurements (1 day)  n= 16  median=   1.5 ms  p95=  13.8 ms  max=  21.7 ms
-  GET  dashboard              n= 30  median=   1.6 ms  p95=  17.7 ms  max=  23.5 ms
-  GET  twin                   n= 30  median=   1.6 ms  p95=  16.0 ms  max=  19.7 ms
+  POST /measurements (1 day)  n= 16  median=   1.4 ms  p95=  16.2 ms  max=  16.4 ms
+  GET  dashboard              n= 30  median=   1.5 ms  p95=  22.6 ms  max=  25.4 ms
+  GET  twin                   n= 30  median=   1.8 ms  p95=  17.8 ms  max=  17.9 ms
   saved to docs\latency.md
 
 DEMO COMPLETE.
