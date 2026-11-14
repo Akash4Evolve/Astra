@@ -69,6 +69,30 @@ interface Store extends Persisted {
 }
 
 const Ctx = createContext<Store | null>(null);
+
+type Outgoing = { type: 'checkin'; record: CheckIn } | { type: 'action'; record: ActionRecord };
+
+/**
+ * The next record to send: the oldest one not yet sent, check-ins and actions together, so
+ * the ground receives them in the order they happened (an acknowledgement before the recheck
+ * that followed it). Both lists are stored newest first, so on equal timestamps the record
+ * further down the list is the older one.
+ */
+export function oldestUnsent(checkins: CheckIn[], actions: ActionRecord[], sent: Set<string>): Outgoing | undefined {
+  let best: { item: Outgoing; at: number; pos: number } | undefined;
+  const consider = (item: Outgoing, at: string, pos: number) => {
+    const t = Date.parse(at);
+    if (!best || t < best.at || (t === best.at && pos > best.pos)) best = { item, at: t, pos };
+  };
+  checkins.forEach((c, i) => {
+    if (!c.synced && !sent.has(c.id)) consider({ type: 'checkin', record: c }, c.at, i);
+  });
+  // A check-in's log row travels with the check-in, so it isn't sent on its own.
+  actions.forEach((a, i) => {
+    if (!a.synced && a.kind !== 'checkin' && !sent.has(a.id)) consider({ type: 'action', record: a }, a.at, i);
+  });
+  return best?.item;
+}
 // UUIDs, because the backend uses record IDs to ignore duplicates when a send is retried.
 const uid = (): string =>
   typeof crypto !== 'undefined' && 'randomUUID' in crypto
@@ -166,8 +190,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     try {
       while (latest.current.linkUp) {
         const { checkins, actions } = latest.current;
-        const c = checkins.find((x) => !x.synced && !sent.has(x.id));
-        const a = actions.find((x) => !x.synced && x.kind !== 'checkin' && !sent.has(x.id));
+        const next = oldestUnsent(checkins, actions, sent);
+        const c = next?.type === 'checkin' ? next.record : undefined;
+        const a = next?.type === 'action' ? next.record : undefined;
         if (c) {
           await api.postCheckin(c);
           sent.add(c.id);
