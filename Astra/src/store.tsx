@@ -33,7 +33,15 @@ function load(): Persisted {
 let clockBase = Date.now();
 let clockSetAt = Date.now();
 export const nowMs = () => (SIMULATED_DATASET ? clockBase + (Date.now() - clockSetAt) : Date.now());
+let clockFor = '';
+/**
+ * Starts the demo clock at the time the dashboard was generated for (the day shown). Fetching
+ * the same day again (after a send or a reset) leaves the clock running, so time never goes
+ * backwards and records keep the order they were made in.
+ */
 const setClock = (iso: string) => {
+  if (iso === clockFor) return;
+  clockFor = iso;
   clockBase = new Date(iso).getTime();
   clockSetAt = Date.now();
 };
