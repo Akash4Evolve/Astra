@@ -1,0 +1,8 @@
+{
+  "dataset": "WESAD (Wearable Stress and Affect Detection)",
+  "citation": "Schmidt, P. & Reiss, A. (2018). UCI Machine Learning Repository. https://doi.org/10.24432/C57K5T",
+  "source": "https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx/download",
+  "subjects": 15,
+  "local_path": "data\\raw\\wesad\\WESAD",
+  "downloaded_at": "2026-11-14T20:39:21"
+}

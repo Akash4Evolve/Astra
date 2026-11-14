@@ -1,0 +1,18 @@
+{
+  "dataset": "Pulse Transit Time PPG Dataset",
+  "source": "PhysioNet",
+  "version": "1.1.0",
+  "url": "https://physionet.org/content/pulse-transit-time-ppg/1.1.0/",
+  "license": "Open Data Commons Open Database License v1.0",
+  "local_path": "data\\raw\\physionet\\pulse_transit_time_ppg",
+  "wfdb_only": false,
+  "n_files": 271,
+  "download_stats": {
+    "downloaded": 257,
+    "skipped": 14,
+    "failed": 0
+  },
+  "failed_files": [],
+  "checksum_failures": [],
+  "downloaded_at": "2026-11-14T18:13:57"
+}

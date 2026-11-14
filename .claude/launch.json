@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "astra-api",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["scripts/serve_crew.py", "--port", "8000"],
+      "port": 8000,
+      "url": "http://127.0.0.1:8000"
+    },
+    {
+      "name": "astra-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "Astra", "run", "dev", "--", "--port", "5173", "--strictPort"],
+      "port": 5173
+    }
+  ]
+}
