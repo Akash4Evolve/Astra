@@ -1,4 +1,4 @@
-# Exact versions the code freeze was tested with (Python 3.11.9, Windows 11): 158 tests passing, 1 skipped.
+# Exact versions this code was tested with (Python 3.11.9, Windows 11): 165 tests passing, 1 skipped, on both the in-memory and SQLite stores.
 anyio==4.15.1
 fastapi==0.115.6
 httpx==0.28.1

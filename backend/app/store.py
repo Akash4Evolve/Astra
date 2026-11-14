@@ -11,8 +11,9 @@ from .sync import SyncLogEntry
 
 
 class InMemoryStore:
-    """Prototype store. Replace with SQLAlchemy when the schema is ready.
-    Every public method here is the interface a database version must implement."""
+    """In-memory store: fast, and everything is lost when the process stops.
+    Every public method here is the interface a database version must implement;
+    SqliteStore (sqlite_store.py) is the persistent one. Choose with ASTRA_DB."""
 
     def __init__(self) -> None:
         self._lock = RLock()

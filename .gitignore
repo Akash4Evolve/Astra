@@ -16,6 +16,11 @@ __MACOSX/
 .DS_Store
 Thumbs.db
 
+# SQLite data (ASTRA_DB / serve_crew.py --db)
+*.db
+*.db-wal
+*.db-shm
+
 # Local settings
 .env
 .env.*.local
