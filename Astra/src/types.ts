@@ -102,6 +102,11 @@ export interface Alert {
   guidanceSources?: { label: string; url: string }[];
   escalateWhen: string;
   provenance: Provenance;
+  /**
+   * Set on a backend alert whose readings ended before the day shown: the time of its last
+   * reading. It stays listed until acknowledged but no longer sets today's status.
+   */
+  endedAt?: string;
 }
 
 export type ActionKind = 'acknowledge' | 'action' | 'recheck' | 'escalate' | 'checkin' | 'measurement';

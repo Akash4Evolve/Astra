@@ -133,6 +133,16 @@ export function ProvenanceTag({ p }: { p: Provenance }) {
   );
 }
 
+/** Marks a backend alert from earlier days that is still listed because it hasn't been acknowledged. */
+export function PastTag({ endedAt }: { endedAt?: string }) {
+  if (!endedAt) return null;
+  return (
+    <span className="past-tag" title="Its readings are back in range, but nobody has acknowledged it yet">
+      Earlier: last reading {utcDate(endedAt)}
+    </span>
+  );
+}
+
 export function Freshness({ at, quality, note }: { at: string; quality?: Quality; note?: string }) {
   const stale = isStale(at);
   const degraded = quality && quality !== 'good';

@@ -5,7 +5,7 @@ import { MISSION_LENGTH } from './data/crew';
 import { CREW, SCENARIOS } from './data/crewData';
 import type { MetricId } from './types';
 import { Icon } from './components/ui';
-import { alertState, isActive } from './derive';
+import { alertState, isActive, isCurrent } from './derive';
 import { go, useRoute } from './router';
 import { nowMs, useStore } from './store';
 import { AlertDetail, AlertsList } from './views/Alerts';
@@ -194,7 +194,7 @@ function DemoBar() {
   );
 }
 
-function TopBar({ watchCount, reviewCount }: { watchCount: number; reviewCount: number }) {
+function TopBar({ watchCount, reviewCount, earlier }: { watchCount: number; reviewCount: number; earlier: number }) {
   const { dashboard, linkUp, acquiring, pending, syncing } = useStore();
   const now = useClock(dashboard?.generatedAt);
   const h = now.getUTCHours();
@@ -216,6 +216,7 @@ function TopBar({ watchCount, reviewCount }: { watchCount: number; reviewCount: 
             {watchCount === 0
               ? 'Your readings are in your usual range.'
               : `${watchCount} active ${watchCount === 1 ? 'alert' : 'alerts'}${reviewCount ? `, ${reviewCount} ${reviewCount === 1 ? 'needs' : 'need'} review.` : ' to watch. Nothing needs urgent review.'}`}
+            {earlier > 0 && ` ${earlier} earlier ${earlier === 1 ? 'alert is' : 'alerts are'} not yet acknowledged.`}
           </p>
         </div>
       </div>
@@ -247,7 +248,8 @@ function TopBar({ watchCount, reviewCount }: { watchCount: number; reviewCount: 
 export default function App() {
   const route = useRoute();
   const { dashboard, error, reload, alertStates, view } = useStore();
-  const active = dashboard ? dashboard.alerts.filter((a) => isActive(alertState(a, alertStates))) : [];
+  const active = dashboard ? dashboard.alerts.filter((a) => isCurrent(a) && isActive(alertState(a, alertStates))) : [];
+  const earlier = dashboard ? dashboard.alerts.filter((a) => !isCurrent(a) && alertState(a, alertStates) === 'open').length : 0;
   const open = dashboard ? dashboard.alerts.filter((a) => alertState(a, alertStates) === 'open').length : 0;
 
   let page;
@@ -284,7 +286,7 @@ export default function App() {
       </a>
       <Sidebar route={route[0]} alertCount={open} />
       <div className="main-col">
-        <TopBar watchCount={active.length} reviewCount={active.filter((a) => a.status === 'review').length} />
+        <TopBar watchCount={active.length} reviewCount={active.filter((a) => a.status === 'review').length} earlier={earlier} />
         {SIMULATED_DATASET && <DemoBar />}
         <main id="main" tabIndex={-1}>
           <div key={route[0]} className="page-enter">

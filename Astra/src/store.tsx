@@ -158,7 +158,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const reload = useCallback(() => {
     setError(null);
     api
-      .getDashboard(view)
+      .getDashboard(view, new Set(Object.keys(latest.current.alertStates)))
       .then((d) => {
         setClock(d.generatedAt);
         setDashboard(d);

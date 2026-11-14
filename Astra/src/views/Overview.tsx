@@ -4,10 +4,10 @@ import { SystemDetail } from '../components/Explain';
 import { Model3D } from '../components/Model3D';
 import { Sparkline, TrendChart, type Range } from '../components/charts';
 import { MissionTimeline } from '../components/MissionTimeline';
-import { CountRing, Freshness, Icon, Panel, ProvenanceTag, StatusChip, fmt, statusText, utcTime } from '../components/ui';
+import { CountRing, Freshness, Icon, PastTag, Panel, ProvenanceTag, StatusChip, fmt, statusText, utcTime } from '../components/ui';
 import { SIMULATED_DATASET } from '../api/client';
 import { LIMITS } from '../data/crew';
-import { alertState, domainIcon, domainLabel, domainReason, domainStatuses, isActive, overallStatus, readingCount } from '../derive';
+import { alertState, domainIcon, domainLabel, domainReason, domainStatuses, isActive, isCurrent, overallStatus, readingCount } from '../derive';
 import { useStore } from '../store';
 import type { Dashboard, Domain, Metric, MetricId } from '../types';
 import { go } from '../router';
@@ -57,7 +57,8 @@ function Hero({ d }: { d: Dashboard }) {
   const active = d.alerts.filter((a) => isActive(alertState(a, alertStates)));
   const status = overallStatus(d, alertStates);
   const count = readingCount(d);
-  const top = active[0];
+  // Today's alerts first, then earlier ones still waiting for a response.
+  const top = active.find(isCurrent) ?? active.find((a) => alertState(a, alertStates) === 'open') ?? active[0];
   const next = d.schedule.find((s) => !s.done && !(s.label === 'Daily check-in' && checkins.length > 0));
   const outside = count.total - count.normal;
   return (
@@ -74,6 +75,11 @@ function Hero({ d }: { d: Dashboard }) {
           <>
             <h2 className="hero-title">{top.title}</h2>
             <p className="hero-sum">
+              {top.endedAt && (
+                <>
+                  <PastTag endedAt={top.endedAt} />{' '}
+                </>
+              )}
               {top.summary}
               {active.length > 1 && (
                 <>
@@ -234,6 +240,7 @@ function AlertsPanel({ d }: { d: Dashboard }) {
                     <span className="alert-meta">
                       <StatusChip status={a.status} small />
                       <span className="state">{st === 'open' ? 'Not yet reviewed' : stateLabel[st]}</span>
+                      <PastTag endedAt={a.endedAt} />
                       <span>{utcTime(a.createdAt)} UTC</span>
                     </span>
                   </span>

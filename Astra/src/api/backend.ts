@@ -172,14 +172,17 @@ function toAlert(a: BAlert, s: BSeries | undefined, o: Owned): Alert {
 
 /**
  * Puts the backend's heart rate and sleep onto a dashboard built from the bundled dataset.
- * Backend alerts replace the app's own alerts for those two metrics; only alerts that are
- * current on the day shown are kept.
+ * Backend alerts replace the app's own alerts for those two metrics. Alerts current on the
+ * day shown are kept. Earlier ones are kept too, marked with `endedAt`, while the backend
+ * still has them open or this device has responded to them (`keep`), so an alert nobody
+ * answered doesn't drop out of sight when its readings return to normal.
  */
-export function mergeBackend(base: Dashboard, trends: BTrends, alerts: BAlert[]): Dashboard {
+export function mergeBackend(base: Dashboard, trends: BTrends, alerts: BAlert[], keep: ReadonlySet<string> = new Set()): Dashboard {
   const viewEnd = Date.parse(`${day(base.generatedAt)}T23:59:59Z`);
   const series = Object.fromEntries(trends.series.map((s) => [s.parameter, s])) as Record<string, BSeries>;
 
   const current: Alert[] = [];
+  const past: Alert[] = [];
   for (const a of alerts) {
     const o = byParameter[a.parameter];
     if (!o || a.level === 'INFO') continue;
@@ -189,7 +192,9 @@ export function mergeBackend(base: Dashboard, trends: BTrends, alerts: BAlert[])
     if (!times.length) continue;
     const firstAt = Math.min(...times);
     const lastAt = Math.max(...times);
-    if (firstAt <= viewEnd && lastAt >= viewEnd - CURRENT_WITHIN_DAYS * DAY_MS) current.push(mapped);
+    if (firstAt > viewEnd) continue; // hasn't started on the day shown
+    if (lastAt >= viewEnd - CURRENT_WITHIN_DAYS * DAY_MS) current.push(mapped);
+    else if (a.status === 'OPEN' || keep.has(a.alert_id)) past.push({ ...mapped, endedAt: new Date(lastAt).toISOString() });
   }
 
   const metrics = { ...base.metrics };
@@ -205,7 +210,8 @@ export function mergeBackend(base: Dashboard, trends: BTrends, alerts: BAlert[])
   return {
     ...base,
     metrics,
-    alerts: [...current, ...own].sort((a, b) => rank[a.status] - rank[b.status]),
+    // Current alerts first (worst first), then earlier ones still waiting for a response.
+    alerts: [...[...current, ...own].sort((a, b) => rank[a.status] - rank[b.status]), ...past],
   };
 }
 

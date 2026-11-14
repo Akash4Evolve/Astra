@@ -46,7 +46,8 @@ const q = encodeURIComponent;
 
 export const api = {
   /** `view` picks the crew member and mission day. */
-  async getDashboard(view?: { crewId: string; day: number }): Promise<Dashboard> {
+  /** `keep`: backend alert IDs this device has responded to, kept visible after their readings end. */
+  async getDashboard(view?: { crewId: string; day: number }, keep?: ReadonlySet<string>): Promise<Dashboard> {
     const base = buildCrewDashboard(CREW_ROWS, view?.crewId ?? 'FE-02', view?.day ?? 143);
     if (DEMO_MODE) {
       await wait(150);
@@ -59,7 +60,7 @@ export const api = {
       http<BTrends>(`/api/v1/astronauts/${q(id)}/trends?${params}&end=${q(end)}&limit=2000`),
       http<BAlert[]>(`/api/v1/alerts?astronaut_id=${q(id)}`),
     ]);
-    return mergeBackend(base, trends, alerts);
+    return mergeBackend(base, trends, alerts, keep);
   },
 
   async postCheckin(c: CheckIn): Promise<void> {

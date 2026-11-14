@@ -36,17 +36,20 @@ export function alertState(a: Alert, states: Record<string, AlertState>): AlertS
 
 export const isActive = (s: AlertState) => s !== 'resolved';
 
+/** False for a backend alert whose readings ended before the day shown (see Alert.endedAt). */
+export const isCurrent = (a: Alert) => !a.endedAt;
+
 export function domainStatuses(d: Dashboard, states: Record<string, AlertState>) {
   const out = {} as Record<Domain, Status>;
   (Object.keys(domainLabel) as Domain[]).forEach((k) => (out[k] = 'normal'));
   Object.values(d.metrics).forEach((m) => (out[m.domain] = worst(out[m.domain], m.status)));
-  d.alerts.filter((a) => isActive(alertState(a, states))).forEach((a) => (out[a.domain] = worst(out[a.domain], a.status)));
+  d.alerts.filter((a) => isCurrent(a) && isActive(alertState(a, states))).forEach((a) => (out[a.domain] = worst(out[a.domain], a.status)));
   return out;
 }
 
 /** One-line reason shown next to each domain: the active alert if there is one, otherwise the latest readings. */
 export function domainReason(d: Dashboard, domain: Domain): string {
-  const alert = d.alerts.find((a) => a.domain === domain);
+  const alert = d.alerts.find((a) => a.domain === domain && isCurrent(a));
   if (alert) return alert.title;
   const m = d.metrics;
   const n = (v: number | null | undefined, dp = 0) => (v === null || v === undefined ? '—' : v.toFixed(dp));
@@ -72,7 +75,7 @@ export function domainReason(d: Dashboard, domain: Domain): string {
 
 /** The worst status among alerts that are still active. */
 export function overallStatus(d: Dashboard, states: Record<string, AlertState>): Status {
-  return d.alerts.filter((a) => isActive(alertState(a, states))).reduce<Status>((s, a) => worst(s, a.status), 'normal');
+  return d.alerts.filter((a) => isCurrent(a) && isActive(alertState(a, states))).reduce<Status>((s, a) => worst(s, a.status), 'normal');
 }
 
 /** How many readings are normal today. A plain count, not a health score. */
