@@ -59,6 +59,7 @@ To keep data (check-ins, acknowledgements, actions, audit trail) across restarts
 
 | Method | Path | Role (when enforced) |
 |---|---|---|
+| GET | `/` (name, version, links to the docs) | any |
 | POST | `/api/v1/measurements` | device |
 | POST | `/api/v1/sync` | device |
 | GET | `/api/v1/sync/status`, `/api/v1/sync/log` | any / device, CMO, ground |
