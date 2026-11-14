@@ -1,15 +1,15 @@
 {
- "generated_at": "2026-11-14T18:03:16+00:00",
+ "generated_at": "2026-11-14T20:08:49+00:00",
  "note": "SIMULATED crew dataset (Astra/src/data), days 1-143, as served by scripts/serve_crew.py",
  "alerts": [
   {
-   "alert_id": "ALT-7B2D7178",
+   "alert_id": "ALT-967F9F77",
    "astronaut_id": "FE-02",
    "parameter": "heart_rate",
    "domain": "cardiovascular",
    "level": "REVIEW",
    "title": "Resting heart-rate trend differs from personal baseline",
-   "created_at": "2026-11-14T18:03:16.432594Z",
+   "created_at": "2026-11-14T20:08:49.985012Z",
    "status": "OPEN",
    "acknowledged_at": null,
    "explanation": {
@@ -32,13 +32,13 @@
    "diagnosis": null
   },
   {
-   "alert_id": "ALT-7B318A7D",
+   "alert_id": "ALT-D49A8343",
    "astronaut_id": "MS-03",
    "parameter": "sleep_hours",
    "domain": "behavioural",
    "level": "REVIEW",
    "title": "Sleep-duration trend differs from personal baseline",
-   "created_at": "2026-11-14T18:03:16.364469Z",
+   "created_at": "2026-11-14T20:08:49.918518Z",
    "status": "OPEN",
    "acknowledged_at": null,
    "explanation": {
@@ -69,13 +69,13 @@
    "diagnosis": null
   },
   {
-   "alert_id": "ALT-F896DBF1",
+   "alert_id": "ALT-46491398",
    "astronaut_id": "CDR-01",
    "parameter": "sleep_hours",
    "domain": "behavioural",
    "level": "WATCH",
    "title": "Sleep-duration trend differs from personal baseline",
-   "created_at": "2026-11-14T18:03:16.295532Z",
+   "created_at": "2026-11-14T20:08:49.850889Z",
    "status": "OPEN",
    "acknowledged_at": null,
    "explanation": {
@@ -97,13 +97,13 @@
    "diagnosis": null
   },
   {
-   "alert_id": "ALT-C54E174C",
+   "alert_id": "ALT-C7272CB9",
    "astronaut_id": "MS-03",
    "parameter": "heart_rate",
    "domain": "cardiovascular",
    "level": "WATCH",
    "title": "Resting heart-rate trend differs from personal baseline",
-   "created_at": "2026-11-14T18:03:16.097039Z",
+   "created_at": "2026-11-14T20:08:49.648995Z",
    "status": "OPEN",
    "acknowledged_at": null,
    "explanation": {
@@ -129,7 +129,7 @@
   "CDR-01": {
    "dashboard": {
     "astronaut_id": "CDR-01",
-    "generated_at": "2026-11-14T18:03:16.440113Z",
+    "generated_at": "2026-11-14T20:08:49.992518Z",
     "domains": [
      {
       "domain": "cardiovascular",
@@ -268,11 +268,11 @@
     ],
     "open_alerts": [
      {
-      "alert_id": "ALT-F896DBF1",
+      "alert_id": "ALT-46491398",
       "level": "WATCH",
       "title": "Sleep-duration trend differs from personal baseline",
       "domain": "behavioural",
-      "created_at": "2026-11-14T18:03:16.295532Z",
+      "created_at": "2026-11-14T20:08:49.850889Z",
       "status": "OPEN"
      }
     ],
@@ -280,7 +280,7 @@
      {
       "device_id": "CREWBAND-CDR-01",
       "state": "CONNECTED",
-      "last_seen_at": "2026-11-14T18:03:16.434603Z",
+      "last_seen_at": "2026-11-14T20:08:49.987519Z",
       "last_reading_at": "2027-07-21T07:10:00Z",
       "seconds_since_last_seen": 0,
       "stale_after_seconds": 1800,
@@ -303,9 +303,9 @@
    },
    "twin": {
     "astronaut_id": "CDR-01",
-    "generated_at": "2026-11-14T18:03:16.443619Z",
+    "generated_at": "2026-11-14T20:08:49.995537Z",
     "model": "bounded_twin_v1",
-    "twin_version": "a79fce8d1c6f",
+    "twin_version": "b1e65a156b01",
     "data_through": "2027-07-21T07:10:00Z",
     "attention_needed": true,
     "domains": [
@@ -342,7 +342,7 @@
       "freshness": "FRESH",
       "completeness_7d": 1.0,
       "open_alert_ids": [
-       "ALT-F896DBF1"
+       "ALT-46491398"
       ],
       "highest_open_level": "WATCH",
       "self_report_7d": null
@@ -2451,7 +2451,7 @@
   "FE-02": {
    "dashboard": {
     "astronaut_id": "FE-02",
-    "generated_at": "2026-11-14T18:03:16.451136Z",
+    "generated_at": "2026-11-14T20:08:50.002541Z",
     "domains": [
      {
       "domain": "cardiovascular",
@@ -2590,11 +2590,11 @@
     ],
     "open_alerts": [
      {
-      "alert_id": "ALT-7B2D7178",
+      "alert_id": "ALT-967F9F77",
       "level": "REVIEW",
       "title": "Resting heart-rate trend differs from personal baseline",
       "domain": "cardiovascular",
-      "created_at": "2026-11-14T18:03:16.432594Z",
+      "created_at": "2026-11-14T20:08:49.985012Z",
       "status": "OPEN"
      }
     ],
@@ -2602,7 +2602,7 @@
      {
       "device_id": "CREWBAND-FE-02",
       "state": "CONNECTED",
-      "last_seen_at": "2026-11-14T18:03:16.434603Z",
+      "last_seen_at": "2026-11-14T20:08:49.987519Z",
       "last_reading_at": "2027-07-21T07:10:00Z",
       "seconds_since_last_seen": 0,
       "stale_after_seconds": 1800,
@@ -2625,9 +2625,9 @@
    },
    "twin": {
     "astronaut_id": "FE-02",
-    "generated_at": "2026-11-14T18:03:16.453640Z",
+    "generated_at": "2026-11-14T20:08:50.005561Z",
     "model": "bounded_twin_v1",
-    "twin_version": "284882c766c2",
+    "twin_version": "e578100e2452",
     "data_through": "2027-07-21T07:10:00Z",
     "attention_needed": true,
     "domains": [
@@ -2640,7 +2640,7 @@
       "freshness": "FRESH",
       "completeness_7d": 1.0,
       "open_alert_ids": [
-       "ALT-7B2D7178"
+       "ALT-967F9F77"
       ],
       "highest_open_level": "REVIEW",
       "self_report_7d": null
@@ -4773,7 +4773,7 @@
   "MS-03": {
    "dashboard": {
     "astronaut_id": "MS-03",
-    "generated_at": "2026-11-14T18:03:16.461193Z",
+    "generated_at": "2026-11-14T20:08:50.014070Z",
     "domains": [
      {
       "domain": "cardiovascular",
@@ -4912,19 +4912,19 @@
     ],
     "open_alerts": [
      {
-      "alert_id": "ALT-7B318A7D",
+      "alert_id": "ALT-D49A8343",
       "level": "REVIEW",
       "title": "Sleep-duration trend differs from personal baseline",
       "domain": "behavioural",
-      "created_at": "2026-11-14T18:03:16.364469Z",
+      "created_at": "2026-11-14T20:08:49.918518Z",
       "status": "OPEN"
      },
      {
-      "alert_id": "ALT-C54E174C",
+      "alert_id": "ALT-C7272CB9",
       "level": "WATCH",
       "title": "Resting heart-rate trend differs from personal baseline",
       "domain": "cardiovascular",
-      "created_at": "2026-11-14T18:03:16.097039Z",
+      "created_at": "2026-11-14T20:08:49.648995Z",
       "status": "OPEN"
      }
     ],
@@ -4932,7 +4932,7 @@
      {
       "device_id": "CREWBAND-MS-03",
       "state": "CONNECTED",
-      "last_seen_at": "2026-11-14T18:03:16.434603Z",
+      "last_seen_at": "2026-11-14T20:08:49.987519Z",
       "last_reading_at": "2027-07-21T07:10:00Z",
       "seconds_since_last_seen": 0,
       "stale_after_seconds": 1800,
@@ -4955,9 +4955,9 @@
    },
    "twin": {
     "astronaut_id": "MS-03",
-    "generated_at": "2026-11-14T18:03:16.463700Z",
+    "generated_at": "2026-11-14T20:08:50.017593Z",
     "model": "bounded_twin_v1",
-    "twin_version": "99aa17f74817",
+    "twin_version": "e0c3719b2090",
     "data_through": "2027-07-21T07:10:00Z",
     "attention_needed": true,
     "domains": [
@@ -4970,7 +4970,7 @@
       "freshness": "FRESH",
       "completeness_7d": 1.0,
       "open_alert_ids": [
-       "ALT-C54E174C"
+       "ALT-C7272CB9"
       ],
       "highest_open_level": "WATCH",
       "self_report_7d": null
@@ -4996,7 +4996,7 @@
       "freshness": "FRESH",
       "completeness_7d": 1.0,
       "open_alert_ids": [
-       "ALT-7B318A7D"
+       "ALT-D49A8343"
       ],
       "highest_open_level": "REVIEW",
       "self_report_7d": null
