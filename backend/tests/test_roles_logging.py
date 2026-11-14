@@ -97,3 +97,13 @@ def test_logs_never_contain_health_values(caplog):
     text = "\n".join(rec.getMessage() for rec in caplog.records)
     assert "audit MEASUREMENTS_INGESTED" in text
     assert not any(f"{m['value']:.3f}"[:6] in text for m in body)
+
+
+def test_root_says_what_the_server_is_even_when_roles_are_enforced(strict):
+    r = strict.get("/")  # no role header: a browser opening the API URL
+    assert r.status_code == 200
+    body = r.json()
+    assert body["name"] == "ASTRA API"
+    assert body["version"] == strict.app.version
+    assert strict.get(body["docs"]).status_code == 200
+    assert strict.get(body["openapi"]).status_code == 200

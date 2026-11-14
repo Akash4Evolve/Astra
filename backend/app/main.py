@@ -137,6 +137,18 @@ def create_app(
             content={"error": {"code": f"HTTP_{exc.status_code}", "message": str(exc.detail)}},
         )
 
+    # ---------- root: what this server is and where to go ----------
+    @app.get("/", tags=["meta"])
+    def root():
+        return {
+            "name": app.title,
+            "version": app.version,
+            "docs": app.docs_url,
+            "openapi": app.openapi_url,
+            "api": "/api/v1",
+            "note": "All astronaut data is simulated. ASTRA never diagnoses.",
+        }
+
     # ---------- experimental: window-level PPG quality gate ----------
     app.include_router(build_experimental_router(ppg_model_path or default_model_path(), audit))
 
