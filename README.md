@@ -103,7 +103,7 @@ Field-by-field definitions: [docs/data_dictionary.md](docs/data_dictionary.md).
 - **Synthetic scenarios** ([docs/evaluation.md](docs/evaluation.md), 200 seeds): 0% alerts on stable, noisy, missing, dropout, stale and motion-artifact scenarios; 84% of gradual drifts and 97% of repeated deviations caught.
 - **Simulated crew dataset** (`python scripts/eval_crew_alerts.py`): 4 alerts in 540 crew-days; 3 on planted events (FE-02 infection, MS-03 sleep disruption, CDR-01 sleep during the CO₂ fault), 1 false.
 - **Experimental PPG quality gate** ([docs/model_card_ppg_quality.md](docs/model_card_ppg_quality.md)): person-wise, catches 91% of unreliable windows (AUROC 0.90) on real PhysioNet + WESAD data.
-- **Latency** ([docs/latency.md](docs/latency.md)): about 1.5 ms median per request on a laptop, in-memory store.
+- **Latency** ([docs/latency.md](docs/latency.md)): on a Windows laptop with the in-memory store, every request finished within 30 ms (p95 15–28 ms). The median was 1.5–3 ms in most runs and up to 15 ms in some, because Windows' default 15.6 ms timer tick can add one tick to a request. The latest recorded run, in `docs/latency.md`, is one of the slower ones.
 
 ## Limitations
 
