@@ -139,7 +139,10 @@ export function DataSync() {
       )}
       {SIMULATED_DATASET && (
         <Panel title="Demo" icon="info">
-          <p className="muted">Clears check-ins, actions and alert responses on this device.</p>
+          <p className="muted">
+            Clears check-ins, actions and alert responses on this device.
+            {!DEMO_MODE && ' Anything already sent to the backend stays there, and alerts show its status.'}
+          </p>
           <button
             className="btn"
             onClick={() => {

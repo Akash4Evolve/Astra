@@ -166,6 +166,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       .catch((e: Error) => setError(e.message));
   }, [view]);
   useEffect(reload, [reload]);
+  // sync() is created once, so it reaches the current reload through a ref.
+  const reloadRef = useRef(reload);
+  useEffect(() => {
+    reloadRef.current = reload;
+  }, [reload]);
 
   const stamp = () => new Date(nowMs()).toISOString();
 
@@ -244,6 +249,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     } finally {
       sending.current = false;
       setSyncing(false);
+      // What was sent can change alerts on the backend (an acknowledgement, a new sleep
+      // alert from a check-in), so show the backend's view again.
+      if (sent.size > 0) reloadRef.current();
     }
   }, []);
 
@@ -300,10 +308,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           /* ignore */
         }
         setP(empty);
+        // Only this device is cleared. Records already sent stay on the backend, so fetch
+        // its alerts again rather than keep showing a copy from before they arrived.
+        reload();
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [p, dashboard, view, error, syncError, syncing, acquiring, pending, lastSync, sync],
+    [p, dashboard, view, error, syncError, syncing, acquiring, pending, lastSync, sync, reload],
   );
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
